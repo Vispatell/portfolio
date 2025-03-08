@@ -1,0 +1,37 @@
+
+Element	Color Code	Description
+Background	#F9F9F9	Light Gray – Clean & easy on the eyes
+Primary Text	#222222	Deep Charcoal – Sharp & modern
+Secondary Text	#666666	Muted Gray – Subtle contrast
+Accent Color	#FF4C60	Vibrant Coral Red – Eye-catching but elegant
+CTA/Highlight	#1E88E5	Bold Blue – Professional & striking
+
+
+🖋️ Typography & Font Style
+Primary Font: 🅿️ Poppins (Sans-Serif)
+Usage: Headlines, section titles, call-to-action buttons
+
+H1 (Main Headings): Poppins, Bold, 48px, #333333
+H2 (Subheadings): Poppins, Medium, 32px, #333333
+CTA Buttons: Poppins, Semi-Bold, 16px, UPPERCASE, #FFFFFF on #FF6B6B
+
+Secondary Font: 🔠 Lora (Serif)
+Usage: Body text, descriptions, and paragraphs
+
+Body Text: Lora, Regular, 18px, #777777
+Alternative Font Option (Modern Look)
+Inter (Highly readable for digital interfaces)
+Pair With: Poppins or Montserrat for headings
+
+p -90
+ae - 85
+il - 80
+b - 90
+
+
+<i class="ri-menu-line"></i>
+<i class="ri-close-large-fill"></i>
+
+service_0olig9m s_id
+template_wo33ria t_id
+fjd75WyYz3d0kG1_g p_key
