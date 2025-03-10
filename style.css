@@ -1,3 +1,13 @@
+@font-face {
+  font-family: "Poppins";
+  src: url(fonts/Poppins-Regular.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "Plain Light";
+  src: url(fonts/plain-light-webfont.ttf) format("truetype");
+}
+
 :root {
   --bg-color: #151515;
 }
