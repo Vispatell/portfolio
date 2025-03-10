@@ -1,75 +1,91 @@
 var videoContainer = document.querySelector(".page4-bottom");
 var video = document.querySelector(".page4-bottom video");
+document.body.style.overflow = "hidden";
 function firstPage() {
   var tl1 = gsap.timeline();
 
-  tl1.from(
-    ".wlc-page .wlc-left",
-    {
+  window.onbeforeunload = function () {
+    window.scrollTo(0, 0);
+  };
+
+  window.addEventListener("load", () => {
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 0);
+
+    document.body.style.overflow = "hidden";
+
+    tl1.from(
+      ".wlc-page .wlc-left",
+      {
+        opacity: 0,
+        x: -500,
+        duration: 1.5,
+        delay: 0.2,
+        ease: "power2",
+      },
+      "start"
+    );
+    tl1.from(
+      ".wlc-page .wlc-right",
+      {
+        opacity: 0,
+        x: 500,
+        duration: 1.5,
+        delay: 0.2,
+        ease: "power2",
+      },
+      "start"
+    );
+
+    tl1.to(".wlc-page", {
+      top: "100%",
+      duration: 1,
+      ease: "power1",
+      onComplete: () => {
+        document.body.style.overflow = "";
+      },
+    });
+
+    tl1.to(".wlc-page", {
+      display: "none",
+    });
+
+    tl1.from(".nav .nav-logo", {
       opacity: 0,
-      x: -500,
-      duration: 1.5,
-      delay: 0.2,
-      ease: "power2",
-    },
-    "start"
-  );
-  tl1.from(
-    ".wlc-page .wlc-right",
-    {
-      opacity: 0,
-      x: 500,
-      duration: 1.5,
-      delay: 0.2,
-      ease: "power2",
-    },
-    "start"
-  );
-
-  tl1.to(".wlc-page", {
-    top: "100%",
-    duration: 1,
-    ease: "power1",
-  });
-
-  tl1.to(".wlc-page", {
-    display: "none",
-  });
-
-  tl1.from(".nav .nav-logo", {
-    opacity: 0,
-    y: -80,
-    duration: 0.6,
-    ease: "power3",
-  });
-
-  tl1.from(".nav-links li", {
-    opacity: 0,
-    y: -60,
-    stagger: 0.1,
-    duration: 0.2,
-    ease: "power3",
-  });
-  tl1.from(
-    ".hero-sec-left .first,.hero-sec-left h1,.hero-sec-left h4,.hero-sec-left .second,.hero-sec-left a",
-    {
-      y: 100,
-      opacity: 0,
+      y: -80,
+      duration: 0.6,
       ease: "power3",
-      duration: 0.7,
-      stagger: 0.3,
-    },
-    "a"
-  );
-  tl1.from(
-    ".hero-sec-right img",
-    {
+    });
+
+    tl1.from(".nav-links li", {
       opacity: 0,
-      x: 400,
-      duration: 0.8,
-    },
-    "a"
-  );
+      y: -60,
+      stagger: 0.1,
+      duration: 0.2,
+      ease: "power3",
+    });
+    tl1.from(
+      ".hero-sec-left .first,.hero-sec-left h1,.hero-sec-left h4,.hero-sec-left .second,.hero-sec-left a",
+      {
+        y: 100,
+        opacity: 0,
+        ease: "power3",
+        duration: 0.7,
+        stagger: 0.3,
+      },
+      "a"
+    );
+    tl1.from(
+      ".hero-sec-right img",
+      {
+        opacity: 0,
+        x: 400,
+        duration: 0.8,
+      },
+      "a"
+    );
+  });
 }
 firstPage();
 
@@ -268,7 +284,9 @@ menuIcon.addEventListener("click", () => {
 emailjs.init("fjd75WyYz3d0kG1_g"); // Replace with your actual Public Key
 
 // Listen for form submission
-document.getElementById("contact-form").addEventListener("submit", function (event) {
+document
+  .getElementById("contact-form")
+  .addEventListener("submit", function (event) {
     event.preventDefault(); // Prevent default form submission
 
     // Collect form data
@@ -280,42 +298,43 @@ document.getElementById("contact-form").addEventListener("submit", function (eve
 
     // Validate form fields (Basic validation)
     if (!fromName || !email || !phone || !service || !message) {
-        Swal.fire({
-            title: "Missing Fields!",
-            text: "Please fill in all fields before submitting.",
-            icon: "warning",
-            confirmButtonText: "OK",
-        });
-        return;
+      Swal.fire({
+        title: "Missing Fields!",
+        text: "Please fill in all fields before submitting.",
+        icon: "warning",
+        confirmButtonText: "OK",
+      });
+      return;
     }
 
     // EmailJS parameters
     const templateParams = {
-        from_name: fromName,
-        email: email,
-        phone: phone,
-        service: service,
-        message: message,
+      from_name: fromName,
+      email: email,
+      phone: phone,
+      service: service,
+      message: message,
     };
 
     // Send the email using EmailJS
-    emailjs.send("service_0olig9m", "template_wo33ria", templateParams)
-        .then(function (response) {
-            Swal.fire({
-                title: "Success!",
-                text: "Your message has been sent successfully.",
-                icon: "success",
-                confirmButtonText: "OK",
-            });
-            document.getElementById("contact-form").reset(); // Clear form after submission
-        })
-        .catch(function (error) {
-            Swal.fire({
-                title: "Error!",
-                text: "Failed to send the message. Please try again later.",
-                icon: "error",
-                confirmButtonText: "OK",
-            });
-            console.error("EmailJS Error:", error);
+    emailjs
+      .send("service_0olig9m", "template_wo33ria", templateParams)
+      .then(function (response) {
+        Swal.fire({
+          title: "Success!",
+          text: "Your message has been sent successfully.",
+          icon: "success",
+          confirmButtonText: "OK",
         });
-});
+        document.getElementById("contact-form").reset(); // Clear form after submission
+      })
+      .catch(function (error) {
+        Swal.fire({
+          title: "Error!",
+          text: "Failed to send the message. Please try again later.",
+          icon: "error",
+          confirmButtonText: "OK",
+        });
+        console.error("EmailJS Error:", error);
+      });
+  });
