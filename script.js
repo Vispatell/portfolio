@@ -218,6 +218,7 @@ var flag = 0;
 videoContainer.addEventListener("click", function () {
   if (flag == 0) {
     video.play();
+    document.querySelector(".video-bg").style.opacity = 0;
     document.querySelector(
       ".video-cursor"
     ).innerHTML = `<i class="ri-pause-mini-fill"></i>`;
@@ -237,25 +238,29 @@ videoContainer.addEventListener("click", function () {
   }
 });
 
-// Use matchMedia to check screen width
-gsap.matchMedia().add("(min-width: 601px)", () => {
-  document.querySelectorAll(".project-card").forEach((card) => {
-    gsap.to(card, {
+// Select all project cards
+// Register ScrollTrigger
+gsap.registerPlugin(ScrollTrigger);
+
+// Select all project cards
+const projectCards = document.querySelectorAll(".project-card");
+
+// Loop through each card and apply animation
+projectCards.forEach((card) => {
+  gsap.fromTo(
+    card,
+    { scale: 1, opacity: 1 }, // Set default visible state
+    {
       scale: 0.7,
       opacity: 0,
       scrollTrigger: {
         trigger: card,
-        start: "top 13%",
-        end: "bottom 13%",
+        start: "top 15%", // Trigger later for smooth effect
+        end: "bottom 15%",
         scrub: true,
       },
-    });
-  });
-
-  return () => {
-    // Cleanup function (removes animation when screen size is < 600px)
-    ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-  };
+    }
+  );
 });
 
 // for media quary
@@ -303,9 +308,27 @@ document
         text: "Please fill in all fields before submitting.",
         icon: "warning",
         confirmButtonText: "OK",
+        background: "#151515",
+        color: "#fff",
+        confirmButtonColor: "#A14EC4",
       });
       return;
     }
+
+    // Show loading message with custom styling
+    Swal.fire({
+      title: "Sending...",
+      text: "Please wait while we process your request.",
+      icon: "info",
+      background: "#151515",
+      color: "#fff",
+      confirmButtonColor: "#A14EC4",
+      allowOutsideClick: false,
+      showConfirmButton: false,
+      didOpen: () => {
+        Swal.showLoading(); // Show a loading animation
+      },
+    });
 
     // EmailJS parameters
     const templateParams = {
@@ -324,7 +347,9 @@ document
           title: "Success!",
           text: "Your message has been sent successfully.",
           icon: "success",
-          confirmButtonText: "OK",
+          background: "#151515",
+          color: "#fff",
+          confirmButtonColor: "#A14EC4",
         });
         document.getElementById("contact-form").reset(); // Clear form after submission
       })
@@ -333,7 +358,9 @@ document
           title: "Error!",
           text: "Failed to send the message. Please try again later.",
           icon: "error",
-          confirmButtonText: "OK",
+          background: "#151515",
+          color: "#fff",
+          confirmButtonColor: "#A14EC4",
         });
         console.error("EmailJS Error:", error);
       });

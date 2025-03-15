@@ -311,8 +311,18 @@ body {
 }
 
 .page4-bottom {
+  position: relative;
   width: fit-content;
   height: 69vh;
+}
+
+.video-bg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  backdrop-filter: blur(5px);
 }
 
 .page4-bottom video {
@@ -323,7 +333,7 @@ body {
 .video-cursor {
   width: 6vw;
   height: 6vw;
-  background-color: #ffffff99;
+  background-color: #151515;
   position: absolute;
   top: 15%;
   left: 7%;
@@ -333,7 +343,8 @@ body {
   justify-content: center;
   font-size: 3vw;
   opacity: 0;
-  color: #000;
+  color: #fff;
+  z-index: 10;
 }
 
 .page5 {
@@ -421,58 +432,87 @@ body {
   color: #ddddddbe;
 }
 
-.page6 {
-  width: 100%;
+.projects-section {
+  background-color: #151515;
+  padding: 5vh 0;
+  text-align: center;
   min-height: 100vh;
-  background-color: var(--bg-color);
-  padding: 13vh 0;
-  position: relative;
-  overflow-x: hidden;
+}
+
+.projects-title {
+  color: #e552ff57;
+  font-size: 3.2vw;
+  margin-bottom: 3vw;
+  font-family: "Poppins";
+  font-style: italic;
+}
+.project-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5vh;
+  padding: 5vh 0;
 }
 
 .project-card {
-  width: 80%;
-  padding: 7vh 5vh;
-  border-radius: 15px;
-  display: flex;
-  align-items: center;
-  gap: 3vw;
-  background-color: #151515f3;
-  box-shadow: 0px 0px 7px rgba(255, 255, 255, 0.1);
-  border: 1px solid #ffffff7f;
-  margin-top: 10vh;
+  width: 30vw;
+  height: 65vh; /* Adjust width for uniformity */
+  background: #181818;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  transition: transform 0.3s ease;
+  border: 1.2px solid #6e6e6e3e;
   position: sticky;
-  top: 13vh;
+  top: 15vh;
 }
 
-.page6-container {
+.project-card:hover {
+  box-shadow: 0 0 3px #ffffff24;
+  transform: scale(1.01);
+}
+.project-card img {
+  width: 100%; /* Ensures full container width */
+  height: 100%; /* Set a fixed height */
+  object-fit: cover; /* Ensures images scale properly without cropping */
+  border-radius: 8px;
+  background-color: black;
+}
+
+.project-img-div {
+  padding: 8px 6px 0 6px;
+}
+.project-tags {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.page6 h1 {
-  font-size: 3.6vw;
-  font-family: "Poppins";
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
   width: 100%;
-  font-style: italic;
-  color: #e552ff57;
-  position: absolute;
-  top: 1%;
-  left: 43%;
+  padding-left: 10px;
+  margin-top: 10px;
 }
 
-.project-card-img img {
-  width: 32vw;
+.project-tags span {
+  background: #e552ff57;
+  color: white;
+  padding: 7px 15px; /* Reduced size */
+  border-radius: 6px;
+  font-size: 13px; /* Reduced font size */
 }
 
-.project-card-des p {
-  font-size: 1.6vw;
-  font-family: "Poppins";
-  width: 100%;
-  color: #ddddddbe;
-  text-align: justify;
+.project-content {
+  text-align: left;
+  flex-grow: 1;
+  padding: 10px;
+}
+
+.project-content p {
+  font-size: 1.1vw;
+  color: #ddd;
+  line-height: 1.5vw;
+  padding: 1vh 0;
+  margin-top: 0.7vw;
+  text-align: start;
 }
 
 .page7 {
@@ -851,7 +891,7 @@ textarea {
 
   .page3 .page3-right {
     width: 100%;
-    padding: 10vw;
+    padding: 5vw 10vw;
   }
 
   .page3-title h1 {
@@ -862,33 +902,42 @@ textarea {
   }
 
   .page3-text p {
-    text-align: center;
-    font-size: 3.8vw;
+    text-align: start;
+    font-size: 4vw;
+    margin-top: 2vh;
+    padding-left: 4.5vw;
+    line-height: 2.7vh;
     width: 100%;
   }
 
   /* page 4 */
 
   .page4 {
-    min-height: 55vh;
+    min-height: 60vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: start;
+    justify-content: space-around;
     padding: 0;
   }
 
   .page4-content {
-    gap: 12vw;
+    gap: 15vw;
   }
 
   .page4-top h1 {
-    font-size: 6.2vw;
-    margin-top: 5vh;
+    font-size: 6vw;
+    margin-top: 1vh;
+    padding: 0 0.5vw;
+  }
+
+  .video-bg {
+    display: none;
   }
 
   .page4-bottom {
     height: 32vh;
+    padding: 0 1vw;
   }
 
   .video-cursor {
@@ -902,7 +951,7 @@ textarea {
 
   .page5 {
     min-height: 40vh;
-    padding-top: 8vh;
+    padding-top: 7vh;
   }
 
   .page5-top {
@@ -948,53 +997,77 @@ textarea {
 
   /* page 6 */
 
-  .page6 {
-    padding: 0;
-    /* background-color: rgba(0, 0, 139, 0.489); */
+  .projects-section {
+    padding: 10px 15px;
+  }
+
+  .projects-title {
+    font-size: 10.2vw;
+    margin-bottom: 25vw;
+  }
+  .project-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* padding: 0 16vw; */
+    justify-content: center; /* Centers items */
+    gap: 25px;
+    column-gap: 0;
+    padding: 0 1px;
   }
 
   .project-card {
-    width: 95%;
-    height: fit-content;
-    padding: 6vw;
-    border-radius: 15px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 7vw;
-    margin-top: 10vh;
-    position: relative;
-    top: 0;
-    /* box-shadow: 0px 0px 13px rgba(255, 255, 255, 0.1); */
-    background-color: #00000000;
-    border: 1px solid #ffffff7f;
-  }
-
-  .page6-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 10vh;
-    /* background-color: salmon; */
-    padding-bottom: 3vh;
-  }
-
-  .page6 h1 {
-    font-size: 14.6vw;
     width: 100%;
-    top: 0%;
-    left: 21%;
+    height: 55vh; /* Adjust width for uniformity */
+    background: #181818;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    transition: transform 0.3s ease;
+    border: 2px solid #6e6e6e3e;
+    box-shadow: 0 0 3px #ffffff24;
   }
 
-  .project-card-img img {
-    width: 100%;
+  .project-card:hover {
+    box-shadow: 0 0 3px #ffffff24;
+    transform: scale(1);
+  }
+  .project-card img {
+    width: 100%; /* Ensures full container width */
+    height: 100%; /* Set a fixed height */
+    object-fit: cover; /* Ensures images scale properly without cropping */
+    border-radius: 8px;
+    background-color: black;
   }
 
-  .project-card-des p {
-    font-size: 3.9vw;
+  .project-img-div {
+    padding: 0;
+  }
+  .project-tags {
     width: 100%;
-    text-align: justify;
+    padding-left: 10px;
+    margin-top: 20px;
+  }
+
+  .project-tags span {
+    background: #e552ff57;
+    color: white;
+    padding: 4px 10px; /* Reduced size */
+    border-radius: 6px;
+    font-size: 15px; /* Reduced font size */
+  }
+
+  .project-content {
+    text-align: left;
+    flex-grow: 1;
+    padding: 10px;
+  }
+
+  .project-content p {
+    font-size: 4vw;
+    color: #ddddddca;
+    line-height: 1.5;
+    margin-top: 20px;
   }
 
   /* page 7 */
