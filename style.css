@@ -841,15 +841,17 @@ textarea {
   /* page 2 */
 
   .page2 {
-    height: 80vh;
+    height: 55vh;
+    margin: 3vh 0;
   }
 
   .move {
     width: 100%;
+    padding: 0 1vw;
   }
 
   .move-content h1 {
-    font-size: 10.8vw;
+    font-size: 9.5vw;
   }
   .stripe-1 {
     width: 90vw;
