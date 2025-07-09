@@ -4,7 +4,6 @@
 window.onbeforeunload = () => window.scrollTo(0, 0);
 window.addEventListener("load", () => {
   window.scrollTo(0, 0);
-  document.body.style.overflow = "hidden";
   startIntroAnimation();
 
   ScrollSmoother.create({
@@ -145,17 +144,16 @@ videoContainer.addEventListener("click", () => {
 // 4. Project Card Scroll Animations
 const projectCards = document.querySelectorAll(".project-card");
 
-// Loop through each card and apply animation
 projectCards.forEach((card) => {
   gsap.fromTo(
     card,
-    { scale: 1, opacity: 1 }, // Set default visible state
+    { scale: 1, opacity: 1 },
     {
       scale: 0.7,
       opacity: 0,
       scrollTrigger: {
         trigger: card,
-        start: "top 15%", // Trigger later for smooth effect
+        start: "top 15%",
         end: "bottom 15%",
         scrub: true,
       },
@@ -180,15 +178,13 @@ const navLinks = document.querySelectorAll(".nav-item");
 navLinks.forEach((link) => {
   link.addEventListener("click", function (e) {
     const href = this.getAttribute("href");
-
-    // Only scroll if it's an internal anchor
     if (href.startsWith("#")) {
       e.preventDefault();
       gsap.to(window, {
         duration: 1,
         scrollTo: {
           y: href,
-          offsetY: -15, // Adjust this offset to match your fixed nav height
+          offsetY: -15,
         },
         ease: "power2.out",
       });
@@ -196,6 +192,7 @@ navLinks.forEach((link) => {
   });
 });
 
+// 6. Contact Form with EmailJS
 emailjs.init("fjd75WyYz3d0kG1_g");
 document.getElementById("contact-form").addEventListener("submit", (e) => {
   e.preventDefault();
