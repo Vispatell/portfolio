@@ -1,72 +1,63 @@
-var videoContainer = document.querySelector(".page4-bottom");
-var video = document.querySelector(".page4-bottom video");
-document.body.style.overflow = "hidden";
-function firstPage() {
-  var tl1 = gsap.timeline();
+// Optimized JavaScript for Portfolio Website
 
-  window.onbeforeunload = function () {
-    window.scrollTo(0, 0);
-  };
+// 1. Scroll Reset and Intro
+window.onbeforeunload = () => window.scrollTo(0, 0);
+window.addEventListener("load", () => {
+  window.scrollTo(0, 0);
+  document.body.style.overflow = "hidden";
+  startIntroAnimation();
 
-  window.addEventListener("load", () => {
-    setTimeout(() => {
-      window.scrollTo(0, 0);
-    }, 0);
+  ScrollSmoother.create({
+    smooth: 1,
+    effects: true,
+    smoothTouch: 0.1,
+  });
+});
 
-    document.body.style.overflow = "hidden";
-
-    tl1.from(
-      ".wlc-page .wlc-left",
-      {
-        opacity: 0,
-        x: -500,
-        duration: 1.5,
-        delay: 0.2,
-        ease: "power2",
-      },
-      "start"
-    );
-    tl1.from(
+function startIntroAnimation() {
+  const tl = gsap.timeline();
+  tl.from(
+    ".wlc-page .wlc-left",
+    {
+      opacity: 0,
+      x: -500,
+      duration: 1.2,
+      ease: "power2",
+    },
+    "start"
+  )
+    .from(
       ".wlc-page .wlc-right",
       {
         opacity: 0,
         x: 500,
-        duration: 1.5,
-        delay: 0.2,
+        duration: 1.2,
         ease: "power2",
       },
       "start"
-    );
-
-    tl1.to(".wlc-page", {
+    )
+    .to(".wlc-page", {
       top: "100%",
-      duration: 1,
+      duration: 0.7,
       ease: "power1",
-      onComplete: () => {
-        document.body.style.overflow = "";
-      },
-    });
-
-    tl1.to(".wlc-page", {
-      display: "none",
-    });
-
-    tl1.from(".nav .nav-logo", {
+      onComplete: () => (document.body.style.overflow = ""),
+    })
+    .to(".wlc-page", { display: "none" })
+    .from(".nav .nav-logo", {
       opacity: 0,
       y: -80,
       duration: 0.6,
       ease: "power3",
-    });
-
-    tl1.from(".nav-links li", {
+    })
+    .from(".nav-links li", {
       opacity: 0,
       y: -60,
       stagger: 0.1,
       duration: 0.2,
       ease: "power3",
-    });
-    tl1.from(
-      ".hero-sec-left .first,.hero-sec-left h1,.hero-sec-left h4,.hero-sec-left .second,.hero-sec-left a",
+    })
+    .from(
+      ".hero-sec-left .first, .hero-sec-left h1, .hero-sec-left h4, .hero-sec-left .second, .hero-sec-left a",
       {
         y: 100,
         opacity: 0,
@@ -74,175 +65,117 @@ function firstPage() {
         duration: 0.7,
         stagger: 0.3,
       },
-      "a"
-    );
-    tl1.from(
+      "hero"
+    )
+    .from(
       ".hero-sec-right img",
       {
         opacity: 0,
         x: 400,
         duration: 0.8,
       },
+      "hero"
+    );
+}
+
+// 2. GSAP Scroll Animations
+function serviceAnimation() {
+  gsap
+    .timeline()
+    .from(
+      ".moveLeft",
+      {
+        x: 600,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.7,
+        ease: "power4.out",
+      },
+      "a"
+    )
+    .from(
+      ".moveRight",
+      {
+        x: -600,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.7,
+        ease: "power4.out",
+      },
+      "a"
+    )
+    .from(
+      ".stripe-1, .stripe-2",
+      {
+        opacity: 0,
+        width: 0,
+        duration: 2,
+        delay: 0.1,
+        ease: "power4.out",
+      },
       "a"
     );
-  });
 }
-firstPage();
-
-function serviceAnimation() {
-  var tl2 = gsap.timeline();
-
-  tl2.from(
-    ".moveLeft",
-    {
-      x: 600,
-      opacity: 0,
-      duration: 1,
-      stagger: 0.7,
-      ease: "power4.out",
-    },
-    "a"
-  );
-
-  tl2.from(
-    ".moveRight",
-    {
-      x: -600,
-      opacity: 0,
-      duration: 1,
-      stagger: 0.7,
-      ease: "power4.out",
-    },
-    "a"
-  );
-
-  tl2.from(
-    ".stripe-1,.stripe-2",
-    {
-      opacity: 0,
-      width: 0,
-      duration: 2,
-      delay: 0.1,
-      ease: "power4.out",
-    },
-    "a"
-  );
-}
-
 ScrollTrigger.create({
   trigger: ".page2",
   start: "top 80%",
-  onEnter: serviceAnimation, // Trigger animation
+  onEnter: serviceAnimation,
 });
 
 function scoreAnimation() {
-  var skills = document.querySelectorAll(".skill-box-top h3");
-  var skillScore = [
-    { score: "85" },
-    { score: "90" },
-    { score: "80" },
-    { score: "90" },
-  ];
-
-  skills.forEach((elem, index) => {
-    var flag = 0;
-
-    var interval = setInterval(() => {
-      if (flag < skillScore[index].score) {
-        flag += 1;
-        elem.innerHTML = `${flag}%`;
-      } else {
-        clearInterval(interval); // Stop when target is reached
-      }
+  const skills = document.querySelectorAll(".skill-box-top h3");
+  const scores = [85, 90, 80, 90];
+  skills.forEach((elem, i) => {
+    let count = 0;
+    const interval = setInterval(() => {
+      if (count < scores[i]) {
+        elem.textContent = `${++count}%`;
+      } else clearInterval(interval);
     }, 25);
   });
 }
-
 ScrollTrigger.create({
   trigger: ".page5",
   start: "top 70%",
-  onEnter: scoreAnimation, // Trigger animation
+  onEnter: scoreAnimation,
 });
 
-function aboutAnimation() {
-  var tl3 = gsap.timeline();
+// 3. Video Interaction
+const videoContainer = document.querySelector(".page4-bottom");
+const video = videoContainer.querySelector("video");
+const videoCursor = document.querySelector(".video-cursor");
+const videoBg = document.querySelector(".video-bg");
+let isPlaying = false;
 
-  tl3.from(
-    ".page3-left .img-div",
-    {
-      x: -700,
-      opacity: 0,
-      duration: 0.8,
-      ease: Power4,
-    },
-    "s"
-  );
-  tl3.from(
-    ".page3-right",
-    {
-      x: 700,
-      opacity: 0,
-      duration: 0.8,
-      ease: Power4,
-    },
-    "s"
-  );
-}
-
-ScrollTrigger.create({
-  trigger: ".page3",
-  start: "top 60%",
-  onEnter: aboutAnimation, // Trigger animation
-});
-
-videoContainer.addEventListener("mouseenter", function () {
-  videoContainer.addEventListener("mousemove", function (dets) {
-    gsap.to(".video-cursor", {
+videoContainer.addEventListener("mouseenter", () => {
+  videoContainer.addEventListener("mousemove", (e) => {
+    gsap.to(videoCursor, {
       opacity: 1,
-    });
-
-    gsap.to(".video-cursor", {
-      left: dets.x - 370,
-      top: dets.y - 150,
+      left: e.x - 370,
+      top: e.y - 150,
     });
   });
 });
 
-videoContainer.addEventListener("mouseleave", function () {
-  gsap.to(".video-cursor", {
-    opacity: 0,
-  });
+videoContainer.addEventListener("mouseleave", () => {
+  gsap.to(videoCursor, { opacity: 0 });
 });
 
-var flag = 0;
-videoContainer.addEventListener("click", function () {
-  if (flag == 0) {
+videoContainer.addEventListener("click", () => {
+  if (!isPlaying) {
     video.play();
-    document.querySelector(".video-bg").style.opacity = 0;
-    document.querySelector(
-      ".video-cursor"
-    ).innerHTML = `<i class="ri-pause-mini-fill"></i>`;
-    gsap.to(".video-cursor", {
-      scale: 1,
-    });
-    flag = 1;
+    videoBg.style.opacity = 0;
+    videoCursor.innerHTML = `<i class="ri-pause-mini-fill"></i>`;
+    gsap.to(videoCursor, { scale: 1 });
   } else {
     video.pause();
-    document.querySelector(
-      ".video-cursor"
-    ).innerHTML = `<i class="ri-play-mini-fill"></i>`;
-    gsap.to(".video-cursor", {
-      scale: 1.3,
-    });
-    flag = 0;
+    videoCursor.innerHTML = `<i class="ri-play-mini-fill"></i>`;
+    gsap.to(videoCursor, { scale: 1.3 });
   }
+  isPlaying = !isPlaying;
 });
 
-// Select all project cards
-// Register ScrollTrigger
-gsap.registerPlugin(ScrollTrigger);
-
-// Select all project cards
+// 4. Project Card Scroll Animations
 const projectCards = document.querySelectorAll(".project-card");
 
 // Loop through each card and apply animation
@@ -263,105 +196,96 @@ projectCards.forEach((card) => {
   );
 });
 
-// for media quary
-
-var menuIcon = document.querySelector(".nav-content i");
-var sideBar = document.querySelector(".sidebar");
-var op = 0;
-var classI = menuIcon.getAttribute("class");
+// 5. Sidebar Toggle
+const menuIcon = document.querySelector(".nav-content i");
+const sidebar = document.querySelector(".sidebar");
+let sidebarOpen = false;
 
 menuIcon.addEventListener("click", () => {
-  if (op === 0) {
-    sideBar.style.display = "block";
-    menuIcon.classList.remove("ri-menu-line");
-    menuIcon.classList.add("ri-close-large-fill");
-    op = 1;
-  } else {
-    sideBar.style.display = "none";
-    menuIcon.classList.remove("ri-close-large-fill");
-    menuIcon.classList.add("ri-menu-line");
-
-    op = 0;
-  }
+  sidebar.style.display = sidebarOpen ? "none" : "block";
+  menuIcon.classList.toggle("ri-menu-line");
+  menuIcon.classList.toggle("ri-close-large-fill");
+  sidebarOpen = !sidebarOpen;
 });
 
-// Initialize EmailJS
-emailjs.init("fjd75WyYz3d0kG1_g"); // Replace with your actual Public Key
+const navLinks = document.querySelectorAll(".nav-item");
 
-// Listen for form submission
-document
-  .getElementById("contact-form")
-  .addEventListener("submit", function (event) {
-    event.preventDefault(); // Prevent default form submission
+navLinks.forEach((link) => {
+  link.addEventListener("click", function (e) {
+    const href = this.getAttribute("href");
 
-    // Collect form data
-    const fromName = document.getElementById("from_name").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const phone = document.getElementById("phone").value.trim();
-    const service = document.getElementById("service").value;
-    const message = document.getElementById("message").value.trim();
+    // Only scroll if it's an internal anchor
+    if (href.startsWith("#")) {
+      e.preventDefault();
+      gsap.to(window, {
+        duration: 1,
+        scrollTo: {
+          y: href,
+          offsetY: -15, // Adjust this offset to match your fixed nav height
+        },
+        ease: "power2.out",
+      });
+    }
+  });
+});
 
-    // Validate form fields (Basic validation)
-    if (!fromName || !email || !phone || !service || !message) {
+emailjs.init("fjd75WyYz3d0kG1_g");
+document.getElementById("contact-form").addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const from_name = document.getElementById("from_name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const service = document.getElementById("service").value;
+  const message = document.getElementById("message").value.trim();
+
+  if (!from_name || !email || !phone || !service || !message) {
+    return Swal.fire({
+      title: "Missing Fields!",
+      text: "Please fill in all fields before submitting.",
+      icon: "warning",
+      confirmButtonText: "OK",
+      background: "#151515",
+      color: "#fff",
+      confirmButtonColor: "#A14EC4",
+    });
+  }
+
+  Swal.fire({
+    title: "Sending...",
+    text: "Please wait while we process your request.",
+    icon: "info",
+    background: "#151515",
+    color: "#fff",
+    confirmButtonColor: "#A14EC4",
+    showConfirmButton: false,
+    allowOutsideClick: false,
+    didOpen: Swal.showLoading,
+  });
+
+  const templateParams = { from_name, email, phone, service, message };
+
+  emailjs
+    .send("service_0olig9m", "template_wo33ria", templateParams)
+    .then(() => {
       Swal.fire({
-        title: "Missing Fields!",
-        text: "Please fill in all fields before submitting.",
-        icon: "warning",
-        confirmButtonText: "OK",
+        title: "Success!",
+        text: "Your message has been sent successfully.",
+        icon: "success",
         background: "#151515",
         color: "#fff",
         confirmButtonColor: "#A14EC4",
       });
-      return;
-    }
-
-    // Show loading message with custom styling
-    Swal.fire({
-      title: "Sending...",
-      text: "Please wait while we process your request.",
-      icon: "info",
-      background: "#151515",
-      color: "#fff",
-      confirmButtonColor: "#A14EC4",
-      allowOutsideClick: false,
-      showConfirmButton: false,
-      didOpen: () => {
-        Swal.showLoading(); // Show a loading animation
-      },
-    });
-
-    // EmailJS parameters
-    const templateParams = {
-      from_name: fromName,
-      email: email,
-      phone: phone,
-      service: service,
-      message: message,
-    };
-
-    // Send the email using EmailJS
-    emailjs
-      .send("service_0olig9m", "template_wo33ria", templateParams)
-      .then(function (response) {
-        Swal.fire({
-          title: "Success!",
-          text: "Your message has been sent successfully.",
-          icon: "success",
-          background: "#151515",
-          color: "#fff",
-          confirmButtonColor: "#A14EC4",
-        });
-        document.getElementById("contact-form").reset(); // Clear form after submission
-      })
-      .catch(function (error) {
-        Swal.fire({
-          title: "Error!",
-          text: "Failed to send the message. Please try again later.",
-          icon: "error",
-          background: "#151515",
-          color: "#fff",
-          confirmButtonColor: "#A14EC4",
-        });
-        console.error("EmailJS Error:", error);
+      e.target.reset();
+    })
+    .catch(() => {
+      Swal.fire({
+        title: "Error!",
+        text: "Failed to send the message. Please try again later.",
+        icon: "error",
+        background: "#151515",
+        color: "#fff",
+        confirmButtonColor: "#A14EC4",
       });
-  });
+    });
+});
