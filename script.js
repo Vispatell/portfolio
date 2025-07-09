@@ -16,46 +16,13 @@ window.addEventListener("load", () => {
 
 function startIntroAnimation() {
   const tl = gsap.timeline();
-  tl.from(
-    ".wlc-page .wlc-left",
-    {
-      opacity: 0,
-      x: -500,
-      duration: 1.2,
-      ease: "power2",
-    },
-    "start"
-  )
-    .from(
-      ".wlc-page .wlc-right",
-      {
-        opacity: 0,
-        x: 500,
-        duration: 1.2,
-        ease: "power2",
-      },
-      "start"
-    )
-    .to(".wlc-page", {
-      top: "100%",
-      duration: 0.7,
-      ease: "power1",
-      onComplete: () => (document.body.style.overflow = ""),
-    })
-    .to(".wlc-page", { display: "none" })
-    .from(".nav .nav-logo", {
-      opacity: 0,
-      y: -80,
-      duration: 0.6,
-      ease: "power3",
-    })
-    .from(".nav-links li", {
-      opacity: 0,
-      y: -60,
-      stagger: 0.1,
-      duration: 0.2,
-      ease: "power3",
-    })
+  tl.from(".nav-links li", {
+    opacity: 0,
+    y: -60,
+    stagger: 0.1,
+    duration: 0.2,
+    ease: "power3",
+  })
     .from(
       ".hero-sec-left .first, .hero-sec-left h1, .hero-sec-left h4, .hero-sec-left .second, .hero-sec-left a",
       {
